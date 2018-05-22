@@ -31,11 +31,16 @@ var handlers = {
   },
   checkBox: function(event) {
     document.addEventListener("click", function(){
-      var className = event.target.className.slice(event.target.className.length - 8);
         if (event.target.innerHTML.length <= 0) {
           event.target.innerHTML = rules.playerTurn();
         }
+      console.log(event.target.id)
     });
+  },
+  startOver: function() {
+    info = [{player: 'player one', token: 'X'}];
+    document.getElementById("brd").innerHTML = "";
+    board();
   }
 }
 
@@ -43,6 +48,7 @@ var board = function(number=3) {
   var brd = document.getElementById("brd");
   for (var r = 0; r < number; r++) {
     var row = document.createElement("tr");
+    var arr = [];
     for (var c = 0; c < number; c++) {
       var cell = document.createElement("td");
       cell.width = "50px";
@@ -50,9 +56,21 @@ var board = function(number=3) {
       cell.id = `c${c}r${r}`;
       cell.onclick = handlers.checkBox;
       row.appendChild(cell);
+      arr.push([]);
     }
-    info.push([[],[],[]]);
+    info.push(arr);
+    arr = [];
     brd.appendChild(row);
   }
-      console.log(info);
 }
+
+
+
+
+
+
+
+
+
+
+
