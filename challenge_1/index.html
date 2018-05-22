@@ -6,14 +6,18 @@
 
   </head>
   <body>
-  <table id='brd' border='2px'></table>
   <button onclick=handlers.startOver()>start again</button>
+  <div>PLAYER ONE <span id=playerone>0</span></div>
+  <div>PLAYER TWO <span id=playertwo>0</span></div>
+
   <script src="./app.js"></script>
   <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function(event) { 
+    document.addEventListener("DOMContentLoaded", function() { 
       board();
     });
   </script>
+  <table id='brd' border='2px'></table>
+  <h2><span id='winner'></span></h2>
   </body>
 </html>
 

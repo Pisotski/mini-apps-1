@@ -1,12 +1,4 @@
-var info = [{player: 'player one', token: 'X'}];
-
-//onClick of any [] place el 'x'
-
-//onClick of first [] place el 'x' change el 'x' to el 'o'
-
-//create function that pushes el into correct row, column or diagonal
-
-//create function that checks
+var info = [{player: 'player one', token: 'X', turn: 0}];
 
 var rules = {
   playerTurn: function() {
@@ -21,25 +13,64 @@ var rules = {
     }
     return token;
   },
+  gameOver: function(res) {
+    var winner = document.getElementById("winner");
+    var player = info[0].player;
+    if (res === 'tie') {
+      winner.innerHTML = 'TIE';
+    } else {
+      winner.innerHTML = `${player} won`;
+      document.getElementById(player.split(" ").join("")).innerHTML++;
+    }
+  },
+  rowChecker: function(val1, val2, val3) {
+    if (!!val1[0] && !!val2[0] && !!val3[0]) {
+      var results = val1[0] + val2[0] + val3[0];
+      if (results === 'XXX' || results === 'OOO') {
+        this.gameOver();
+      } else if (info[0].turn === 9) {
+        this.gameOver('tie');
+      }
+    }
+  },
+  solutionChecker: function(row, col) {
+    var board = info.slice(1);
+    if (info[0].turn > 4) {
+      if (row + col % 2 === 0) {
+        this.rowChecker(board[0][col], board[1][col], board[2][col]);
+        this.rowChecker(board[row][0], board[row][1], board[row][2]);
+      } else {
+        this.rowChecker(board[0][col], board[1][col], board[2][col]);
+        this.rowChecker(board[row][0], board[row][1], board[row][2]);
+        this.rowChecker(board[0][0], board[1][1], board[2][2]);
+        this.rowChecker(board[2][0], board[1][1], board[0][2]);
+      }
+    }
+  },
+  putIntoCell: function(id, token) {
+    var row = Number(id[3]) + 1;
+    var col = Number(id[1]);
+    info[row][col].push(token);
+    info[0].turn++;
+    this.solutionChecker(row - 1, col);
+  }
 } 
 
 var handlers = {
-  createBoard: function() {
-    document.addEventListener("click", function(){
-      board();
-    });
-  },
   checkBox: function(event) {
+    console.log(info);
+    rules.putIntoCell(event.target.id, info[0].token);
     document.addEventListener("click", function(){
         if (event.target.innerHTML.length <= 0) {
           event.target.innerHTML = rules.playerTurn();
         }
-      console.log(event.target.id)
     });
+    event.target.removeEventListener("onclick", handlers.checkBox);
   },
   startOver: function() {
-    info = [{player: 'player one', token: 'X'}];
     document.getElementById("brd").innerHTML = "";
+    info = [{player: 'player one', token: 'X', turn: 0}];
+    document.getElementById("winner").innerHTML = '';
     board();
   }
 }
