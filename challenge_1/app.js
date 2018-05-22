@@ -18,9 +18,11 @@ var rules = {
     var player = info[0].player;
     if (res === 'tie') {
       winner.innerHTML = 'TIE';
+      return;
     } else {
       winner.innerHTML = `${player} won`;
       document.getElementById(player.split(" ").join("")).innerHTML++;
+      return;
     }
   },
   rowChecker: function(val1, val2, val3) {
@@ -58,14 +60,16 @@ var rules = {
 
 var handlers = {
   checkBox: function(event) {
-    console.log(info);
-    rules.putIntoCell(event.target.id, info[0].token);
-    document.addEventListener("click", function(){
-        if (event.target.innerHTML.length <= 0) {
-          event.target.innerHTML = rules.playerTurn();
-        }
-    });
-    event.target.removeEventListener("onclick", handlers.checkBox);
+    console.log(event.target.innerHTML.length < 0);
+    if (event.target.innerHTML.length === 0) {
+      rules.putIntoCell(event.target.id, info[0].token);
+      document.addEventListener("click", function(){
+          if (event.target.innerHTML.length <= 0) {
+            event.target.innerHTML = rules.playerTurn();
+          }
+      });
+      event.target.removeEventListener("onclick", handlers.checkBox);
+    }
   },
   startOver: function() {
     document.getElementById("brd").innerHTML = "";
