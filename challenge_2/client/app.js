@@ -24,6 +24,7 @@ var app = {
       data: JSON.stringify(message),
       contentType: 'application/json',
       success: function(data) {
+        console.log(typeof data, 'hi');
         var node =  document.createTextNode(data);
         $('body').append(node);
       },
@@ -36,7 +37,6 @@ var app = {
     $.ajax({
       url: app.server,
       type: 'GET',
-      // contentType: 'application/json',
       success: function(data) {
         console.log(data, 'from app.fetch')
       },
