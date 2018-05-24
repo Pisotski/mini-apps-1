@@ -46,40 +46,6 @@
   ]
 };
 
-// var salesTeam = {
-//   name: 'Arnaldo McDermott',
-//   individualSales: 14,
-//   manages: [
-//     {
-//       name: 'Lavina Romaguera',
-//       individualSales: 15,
-//       manages: [
-//         {
-//           name: 'Glen Hodkiewicz',
-//           individualSales: 12,
-//           manages: []
-//         }
-//       ]
-//     },
-//     {
-//       name: 'Rey Hills',
-//       individualSales: 19,
-//       manages: []
-//     }
-//   ]
-// };
-
-
-// var totalSales = function(object) {
-//   var result = [];
-//   result.push(object.name);
-//   object.manages.forEach(function(el) {
-//     result = result.concat(totalSales(el));
-//   });
-//   return result;
-// }
-
-// totalSales(salesTeam);
 var objectFlattener = function(obj) {
   var arr = [];
   for (var key in obj) {
